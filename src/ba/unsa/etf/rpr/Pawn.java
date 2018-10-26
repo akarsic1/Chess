@@ -1,6 +1,5 @@
 package ba.unsa.etf.rpr;
 
-public class Pawn {
     public class Pawn extends ChessPiece {
 
 
@@ -20,9 +19,9 @@ public class Pawn {
             char trenutno_slovo = trenutna.charAt(0);
             int trenutni_broj = Integer.parseInt(trenutna);
             if(trenutno_slovo > 72)trenutno_slovo -= 32;
-            if(broj >trenutni_broj + 2)throw new IllegalChessMoveException("");
             if((trenutno_slovo == 'B' || trenutno_slovo == 'G') && (slovo == trenutno_slovo + 2   || slovo == trenutno_slovo +1) && broj == trenutni_broj) position = potez;
-            else if(slovo > trenutno_slovo + 1 )
+            else if(broj == trenutni_broj && slovo == trenutno_slovo + 1 ) position = potez;
+            else throw new IllegalChessMoveException("");
         }
 
     }
