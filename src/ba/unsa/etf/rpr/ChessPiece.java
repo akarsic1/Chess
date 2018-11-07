@@ -6,12 +6,13 @@ public abstract class ChessPiece {
     String position;
      public static Color color;
 
-    public boolean checkIllegal(String pozicija){
+    public static boolean checkIllegal(String pozicija){
+        if(pozicija == ""){return true;}
         char slovo = pozicija.charAt(0);
-        int broj = Integer.parseInt(pozicija);
+        char broj = pozicija.charAt(1);
         if(pozicija.length() > 2 || pozicija.length()<= 0)return true;
-        if(slovo < 'A' && slovo > 'H' && slovo < 'a' && slovo > 'h')return true;
-        if(broj <1 && broj > 9)return true;
+        if((slovo < 'A' || slovo > 'H') && (slovo < 'a' || slovo > 'h'))return true;
+        if(broj < '1' || broj > '8')return true;
         return false;
     }
 
@@ -21,10 +22,6 @@ public abstract class ChessPiece {
          color = boja;
      }
 
-     public class IllegalChessMoveException extends  Exception{
-         public IllegalChessMoveException() { super(); }
-         public IllegalChessMoveException(String msg) {super(msg);}
-     }
 
      public void move(String pozicija)throws IllegalChessMoveException{
      }

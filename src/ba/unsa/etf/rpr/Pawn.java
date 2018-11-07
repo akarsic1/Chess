@@ -11,16 +11,16 @@ package ba.unsa.etf.rpr;
 
         @Override
         public void move(String potez)throws IllegalChessMoveException{
-            char slovo = potez.charAt(0);
-            int broj = Integer.parseInt(potez);
             String trenutna = getPosition();
             if(checkIllegal(potez))throw new IllegalArgumentException("");
+            char slovo = potez.charAt(0);
+            char broj = potez.charAt(1);
             if(slovo > 72) slovo -= 32;
             char trenutno_slovo = trenutna.charAt(0);
-            int trenutni_broj = Integer.parseInt(trenutna);
+            char trenutni_broj = trenutna.charAt(1);
             if(trenutno_slovo > 72)trenutno_slovo -= 32;
-            if((trenutno_slovo == 'B' || trenutno_slovo == 'G') && (slovo == trenutno_slovo + 2   || slovo == trenutno_slovo +1) && broj == trenutni_broj) position = potez;
-            else if(broj == trenutni_broj && slovo == trenutno_slovo + 1 ) position = potez;
+            if((trenutni_broj =='7' || trenutni_broj == '2') && slovo == trenutno_slovo && (broj == trenutni_broj+1 || broj == trenutni_broj+2))position = potez;
+            else if(broj == trenutni_broj + 1 && slovo == trenutno_slovo ) position = potez;
             else throw new IllegalChessMoveException("");
         }
 
