@@ -15,6 +15,6 @@ public class Rook extends ChessPiece{
         char trenutni_broj = trenutna.charAt(1);
         if(trenutno_slovo > 72)trenutno_slovo -= 32;
         if(slovo != trenutno_slovo && broj != trenutni_broj )throw  new IllegalChessMoveException("");
-        position = potez;
+        else position = potez;
     }
 }

@@ -2,11 +2,13 @@ package ba.unsa.etf.rpr;
 
 public abstract class ChessPiece implements Cloneable{
 
-    public enum Color{BLACK, WHITE}
-    String position;
-     public static Color color;
+    public enum Color{WHITE,BLACK}
 
-     public Object clone()throws CloneNotSupportedException{
+
+    String position;
+    Color color;
+
+     protected Object clone()throws CloneNotSupportedException{
             ChessPiece klon = (ChessPiece)super.clone();
             return klon;
      }
@@ -24,7 +26,7 @@ public abstract class ChessPiece implements Cloneable{
      public ChessPiece(String pozicija, Color boja){
          if(checkIllegal(pozicija))throw new IllegalArgumentException("");
          position = pozicija;
-         color = boja;
+         this.color = boja;
      }
 
 
@@ -38,5 +40,7 @@ public abstract class ChessPiece implements Cloneable{
     public String getPosition() {
         return position;
     }
-
+    public void setPosition(String position) {
+        this.position = position;
+    }
 }
