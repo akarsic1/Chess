@@ -35,30 +35,20 @@ public class Board {
         }
     }
 
-    public void captured(ChessPiece c){
-        for(int i = 0; i < figures.size(); i++){
-            if(figures.get(i) == c)figures.remove(i);
-        }
+    public void captured(int i){
+        figures.remove(i);
     }
 
     public boolean isPathClear(ChessPiece moveable, String newPosition) throws IllegalChessMoveException {
-        Board nova = new Board();
         String now = moveable.getPosition();
         ChessPiece.Color boja = moveable.getColor();
-        nova.figures = new ArrayList<ChessPiece>();
-        try {
-            for (int i = 0; i < figures.size(); i++) {
-                nova.figures.add((ChessPiece) figures.get(i).clone());
-            }
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+
         if (moveable instanceof Knight) {
-            for (int i = 0; i < nova.figures.size(); i++) {
-                if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+            for (int i = 0; i < figures.size(); i++) {
+                if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja))
                     return false;
-                else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                    captured(nova.figures.get(i));
+                else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                    captured(i);
                     return true;
                 }
             }
@@ -67,14 +57,14 @@ public class Board {
 
         if (moveable instanceof Rook) {
             if (now.charAt(0) == newPosition.charAt(0)) {
-                for (int i = 0; i < nova.figures.size(); i++) {
-                    if (now.charAt(0) == nova.figures.get(i).getPosition().charAt(0)) {
-                        if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja)) {
+                for (int i = 0; i < figures.size(); i++) {
+                    if (now.charAt(0) == figures.get(i).getPosition().charAt(0)) {
+                        if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja)) {
                             return false;
-                        } else if ((nova.figures.get(i).getPosition().charAt(1) < newPosition.charAt(1) && nova.figures.get(i).getPosition().charAt(1) > now.charAt(1)) || (nova.figures.get(i).getPosition().charAt(1) > newPosition.charAt(1) && nova.figures.get(i).getPosition().charAt(1) < now.charAt(1))) {
+                        } else if ((figures.get(i).getPosition().charAt(1) < newPosition.charAt(1) && figures.get(i).getPosition().charAt(1) > now.charAt(1)) || (figures.get(i).getPosition().charAt(1) > newPosition.charAt(1) && figures.get(i).getPosition().charAt(1) < now.charAt(1))) {
                             return false;
-                        } else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                            captured(nova.figures.get(i));
+                        } else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                            captured(i);
                             return true;
                         }
                     }
@@ -82,14 +72,14 @@ public class Board {
                 return true;
             }
             if (now.charAt(1) == newPosition.charAt(1)) {
-                for (int i = 0; i < nova.figures.size(); i++) {
-                    if (now.charAt(1) == nova.figures.get(i).getPosition().charAt(1)) {
-                        if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+                for (int i = 0; i < figures.size(); i++) {
+                    if (now.charAt(1) == figures.get(i).getPosition().charAt(1)) {
+                        if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja))
                             return false;
-                        else if ((nova.figures.get(i).getPosition().charAt(0) < newPosition.charAt(0) && nova.figures.get(i).getPosition().charAt(0) > now.charAt(0)) || (nova.figures.get(i).getPosition().charAt(0) > newPosition.charAt(0) && nova.figures.get(i).getPosition().charAt(0) < now.charAt(0)))
+                        else if ((figures.get(i).getPosition().charAt(0) < newPosition.charAt(0) && figures.get(i).getPosition().charAt(0) > now.charAt(0)) || (figures.get(i).getPosition().charAt(0) > newPosition.charAt(0) && figures.get(i).getPosition().charAt(0) < now.charAt(0)))
                             return false;
-                        else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                            captured(nova.figures.get(i));
+                        else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                            captured(i);
                             return true;
                         }
                     }
@@ -99,17 +89,17 @@ public class Board {
             return true;
         }
 
-        if (moveable instanceof Bishop) {
+        if (moveable instanceof Bishop) {//popravljati pod hitno
             int razlika = Math.abs(now.charAt(0) - newPosition.charAt(0));
-            for (int i = 0; i < nova.figures.size(); i++) {
-                char poz = nova.figures.get(i).getPosition().charAt(0);
-                char br = nova.figures.get(i).getPosition().charAt(1);
-                if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+            for (int i = 0; i < figures.size(); i++) {
+                char poz = figures.get(i).getPosition().charAt(0);
+                char br = figures.get(i).getPosition().charAt(1);
+                if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja))
                     return false;
                 else if (Math.abs(poz - now.charAt(0)) > now.charAt(0) && Math.abs(poz - now.charAt(0)) < razlika && ((poz < now.charAt(0) && poz > newPosition.charAt(0)) || (poz > now.charAt(0) && poz < newPosition.charAt(0)))){
                    return false;}
-                else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                    captured(nova.figures.get(i));
+                else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                    captured(i);
                     return true;
                 }
             }
@@ -117,11 +107,11 @@ public class Board {
         }
 
         if (moveable instanceof King) {
-            for (int i = 0; i < nova.figures.size(); i++) {
-                if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+            for (int i = 0; i < figures.size(); i++) {
+                if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja))
                     return false;
-                else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                    captured(nova.figures.get(i));
+                else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                    captured(i);
                     return true;
                 }
             }
@@ -130,14 +120,14 @@ public class Board {
 
         if (moveable instanceof Queen) {
             if (now.charAt(0) == newPosition.charAt(0)) {
-                for (int i = 0; i < nova.figures.size(); i++) {
-                    if (now.charAt(0) == nova.figures.get(i).getPosition().charAt(0)) {
-                        if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja)) {
+                for (int i = 0; i < figures.size(); i++) {
+                    if (now.charAt(0) == figures.get(i).getPosition().charAt(0)) {
+                        if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor().equals(boja)) {
                             return false;
-                        } else if ((nova.figures.get(i).getPosition().charAt(1) < newPosition.charAt(1) && nova.figures.get(i).getPosition().charAt(1) > now.charAt(1)) || (nova.figures.get(i).getPosition().charAt(1) > newPosition.charAt(1) && nova.figures.get(i).getPosition().charAt(1) < now.charAt(1))) {
+                        } else if ((figures.get(i).getPosition().charAt(1) < newPosition.charAt(1) && figures.get(i).getPosition().charAt(1) > now.charAt(1)) || (figures.get(i).getPosition().charAt(1) > newPosition.charAt(1) && figures.get(i).getPosition().charAt(1) < now.charAt(1))) {
                             return false;
-                        } else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                            captured(nova.figures.get(i));
+                        } else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                            captured(i);
                             return true;
                         }
                     }
@@ -145,14 +135,14 @@ public class Board {
                 return true;
             }
             else if (now.charAt(1) == newPosition.charAt(1)) {
-                for (int i = 0; i < nova.figures.size(); i++) {
-                    if (now.charAt(1) == nova.figures.get(i).getPosition().charAt(1)) {
-                        if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+                for (int i = 0; i < figures.size(); i++) {
+                    if (now.charAt(1) == figures.get(i).getPosition().charAt(1)) {
+                        if (figures.get(i).getPosition().equals( newPosition) && figures.get(i).getColor().equals(boja))
                             return false;
-                        else if ((nova.figures.get(i).getPosition().charAt(0) < newPosition.charAt(0) && nova.figures.get(i).getPosition().charAt(0) > now.charAt(0)) || (nova.figures.get(i).getPosition().charAt(0) > newPosition.charAt(0) && nova.figures.get(i).getPosition().charAt(0) < now.charAt(0)))
+                        else if ((figures.get(i).getPosition().charAt(0) < newPosition.charAt(0) && figures.get(i).getPosition().charAt(0) > now.charAt(0)) || (figures.get(i).getPosition().charAt(0) > newPosition.charAt(0) && figures.get(i).getPosition().charAt(0) < now.charAt(0)))
                             return false;
-                        else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                            captured(nova.figures.get(i));
+                        else if (figures.get(i).getPosition().equals( newPosition) && figures.get(i).getColor() != boja) {
+                            captured(i);
                             return true;
                         }
                     }
@@ -162,14 +152,14 @@ public class Board {
             int razlika = Math.abs(now.charAt(0) - newPosition.charAt(0));
             int razlika1 = Math.abs(now.charAt(1) - newPosition.charAt(1));
             if(razlika == razlika1) {
-                for (int i = 0; i < nova.figures.size(); i++) {
-                    char poz = nova.figures.get(i).getPosition().charAt(0);
-                    if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja))
+                for (int i = 0; i < figures.size(); i++) {
+                    char poz = figures.get(i).getPosition().charAt(0);
+                    if (figures.get(i).getPosition().equals( newPosition) && figures.get(i).getColor().equals(boja))
                         return false;
                     else if (Math.abs(poz - now.charAt(0)) < razlika && ((poz < now.charAt(0) && poz > newPosition.charAt(0)) || (poz > now.charAt(0) && poz < newPosition.charAt(0))))
                         return false;
-                    else if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                        captured(nova.figures.get(i));
+                    else if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja) {
+                        captured(i);
                         return true;
                     }
                 }
@@ -177,18 +167,17 @@ public class Board {
             }
         }
         if (moveable instanceof Pawn) {
-            for (int i = 0; i < nova.figures.size(); i++) {
-                if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor().equals(boja)) return false;
+            for (int i = 0; i < figures.size(); i++) {
+                if (figures.get(i).getPosition().charAt(1)==newPosition.charAt(1)&&figures.get(i).getPosition().charAt(0)==newPosition.charAt(0) && figures.get(i).getColor().equals(boja)) return false;
                 if (now.charAt(0) == newPosition.charAt(0)) {
                     if(Math.abs(now.charAt(1) - newPosition.charAt(1)) == 1)return true;
-                    if (nova.figures.get(i).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
+                    if (figures.get(i).getPosition().equals(newPosition) && figures.get(i).getColor() != boja && figures.get(i).getPosition().charAt(0)==newPosition.charAt(0)) {
                             return false;
                         }
                     } else if (now.charAt(0) != newPosition.charAt(0)) {
-                        for (int j = 0; j < nova.figures.size(); j++) {
-                            if (nova.figures.get(j).getPosition() == newPosition && nova.figures.get(i).getColor() != boja) {
-                                System.out.println("Pojo");
-                                captured(nova.figures.get(i));
+                        for (int j = 0; j < figures.size(); j++) {
+                            if (figures.get(j).getPosition().charAt(1)==newPosition.charAt(1)&&figures.get(j).getPosition().charAt(0)==newPosition.charAt(0) && figures.get(j).getColor() != boja) {
+                                captured(j);
                                 return true;
                             }
                         }
@@ -201,55 +190,27 @@ public class Board {
     }
 
     public void move(Class type, ChessPiece.Color color, String position) throws IllegalChessMoveException {
-        Board nova = new Board();
-        String pozicija = "";
-        nova.figures = new ArrayList<ChessPiece>();
-        try {
-            for(int i = 0; i<figures.size(); i++) {
-                nova.figures.add((ChessPiece) figures.get(i).clone());
-            }
-        }catch (CloneNotSupportedException e){
-            e.printStackTrace();
-        }
         String stara_pozicija = "";
-        for(int i = 0; i < nova.figures.size(); i++){
+        for(int i = 0; i <figures.size(); i++) {
             try {
-                if(figures.get(i).getClass().equals(type) && figures.get(i).getColor() == color) {
+                if (figures.get(i).getClass().equals(type) && figures.get(i).getColor().equals(color)) {
                     stara_pozicija = figures.get(i).getPosition();
-                    figures.get(i).move(position);//pokusaj uskladiti
+                    figures.get(i).move(position);
                     figures.get(i).setPosition(stara_pozicija);
-                    break;
+                    if(isPathClear(figures.get(i), position)){figures.get(i).move(position);break;}
+                    else {throw new IllegalChessMoveException("");}
                 }
-            }catch (IllegalChessMoveException e){
-                    figures.get(i).setPosition(stara_pozicija);
+            } catch (IllegalChessMoveException e) {
+                figures.get(i).setPosition(stara_pozicija);
+                continue;
             }
-            /*if(nova.figures.get(i).getColor().equals(color) && nova.figures.get(i).getClass() == type && nova.figures.get(i) instanceof Pawn){
-                if((position.charAt(0) == nova.figures.get(i).getPosition().charAt(0) && Math.abs(position.charAt(1) - nova.figures.get(i).getPosition().charAt(1)) <= 2) || (Math.abs(position.charAt(0) - nova.figures.get(i).getPosition().charAt(0))==1) &&  (Math.abs(position.charAt(1) - nova.figures.get(i).getPosition().charAt(1))==1)){
-                    if(isPathClear(nova.figures.get(i), position)){pozicija = nova.figures.get(i).getPosition();break;}
-                }
-            }
-            else if(nova.figures.get(i).getColor().equals(color) && nova.figures.get(i).getClass() == type && nova.figures.get(i) instanceof Knight && Math.abs(nova.figures.get(i).getPosition().charAt(0)-position.charAt(0))<=2)
-                pozicija = nova.figures.get(i).getPosition();
-            else if(nova.figures.get(i).getColor().equals(color) && nova.figures.get(i).getClass() == type)
-                pozicija = nova.figures.get(i).getPosition();*/
+            if(i == figures.size() - 1){throw new IllegalChessMoveException("");}
         }
-        System.out.println(pozicija);
-        for(int i = 0; i < nova.figures.size(); i++){
-            if(nova.figures.get(i).getColor().equals(color) && nova.figures.get(i).getClass().equals(type) && nova.figures.get(i).getPosition() == pozicija){
-                try{
-                    nova.figures.get(i).move(position);
-                    if(isPathClear(figures.get(i), position))figures.get(i).move(position);
-                    else throw new IllegalChessMoveException("");
-                }catch (IllegalChessMoveException e){
-                    throw new IllegalChessMoveException();
-                }
-
-            }
-        }
-
     }
 
-    void move(String oldPosition, String newPosition){}
+    void move(String oldPosition, String newPosition){
+
+    }
 
     boolean isCheck(ChessPiece.Color color){
                 /*Board nova = new Board();

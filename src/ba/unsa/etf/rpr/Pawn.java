@@ -19,9 +19,9 @@ package ba.unsa.etf.rpr;
             char trenutno_slovo = trenutna.charAt(0);
             char trenutni_broj = trenutna.charAt(1);
             if(trenutno_slovo > 72)trenutno_slovo -= 32;
-            if((trenutni_broj =='7' || trenutni_broj == '2') && slovo == trenutno_slovo && (Math.abs(trenutni_broj-broj)<=2))position = potez;
+            if((Math.abs(trenutni_broj-broj)==1) && (slovo == trenutno_slovo + 1 || slovo == trenutno_slovo - 1)) position = potez;
+            else if((trenutni_broj =='7' || trenutni_broj == '2') && slovo == trenutno_slovo && (Math.abs(trenutni_broj-broj)<=2))position = potez;
             else if((Math.abs(trenutni_broj-broj)==1) && slovo == trenutno_slovo ) position = potez;
-            else if((Math.abs(trenutni_broj-broj)==1) && (slovo == trenutno_slovo + 1 || slovo == trenutno_slovo - 1)) position = potez;
             else throw new IllegalChessMoveException("");
         }
 
